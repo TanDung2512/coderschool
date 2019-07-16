@@ -1,0 +1,62 @@
+<html5>
+  <head>
+
+  </head>
+  <body>
+    <style>
+      .success{
+        background-color : green;
+      }
+      .fail {
+        background-color : red;
+      }
+    </style>
+    <div id="message"></div>
+    <input type="number" id="number">
+    <button id="guessButton">Guess</button>
+    <h5>
+      Your last guess :
+    </h5>
+    <ul id="pastguess">
+    </ul>
+      <script>
+        var randomNumber = Math.floor(Math.random() * 100);
+        let button    = document.getElementById("guessButton");
+        let message   = document.getElementById("message");
+        let pastGuess = document.getElementById("pastguess");
+        let remainingGuess = 10;
+        button.addEventListener('click', function(){
+
+          let valueInput = document.getElementById("number").value
+          valueInput -= 0;
+          let messageToUser = "runtime error";
+          if(remainingGuess == 0){
+            return
+          }
+          if(valueInput == ""){
+            return
+          }
+          remainingGuess--;
+
+          if(valueInput > randomNumber){
+            messageToUser = "Sorry your guess is too high. You have " + remainingGuess + " guesses left";
+            message.className = "fail"
+          }
+          else if(valueInput < randomNumber){
+            messageToUser = "Sorry your guess is too low. You have " + remainingGuess + " guesses left";
+            message.className = "fail"
+          }
+          else{
+            messageToUser = "Congratulations!! You guessed correctly.";
+            message.className = "success"
+          }
+
+          let node = document.createElement("LI");
+          let text = document.createTextNode(valueInput);
+          node.appendChild(text)
+          pastGuess.appendChild(node)
+          message.innerHTML = messageToUser;
+        })
+      </script>
+  </body>
+</html5>
