@@ -4,21 +4,24 @@
   </head>
   <body>
     <style>
+
       .success{
+
         background-color : green;
       }
       .fail {
         background-color : red;
       }
     </style>
-    <div id="message"></div>
-    <input type="number" id="number">
-    <button id="guessButton">Guess</button>
-    <h5>
-      Your last guess :
-    </h5>
-    <ul id="pastguess">
-    </ul>
+
+      <div id="message"></div>
+      <input type="number" id="number">
+      <button id="guessButton">Guess</button>
+      <h5>
+        Your last guess :
+      </h5>
+      <ul id="pastguess">
+      </ul>
       <script>
         var randomNumber = Math.floor(Math.random() * 100);
         let button    = document.getElementById("guessButton");
