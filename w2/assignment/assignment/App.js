@@ -2,41 +2,49 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Alert, ScrollView,Dimensions} from 'react-native';
 
 const imgData = [
-  { id: 1, imgSource: require('./assets/image_1.jpg') },
-  { id: 2, imgSource: require('./assets/image_2.jpg') },
-  { id: 3, imgSource: require('./assets/image_3.jpg') },
-  { id: 4, imgSource: require('./assets/image_4.jpeg') },
-  { id: 5, imgSource: require('./assets/image_5.jpg') },
-  { id: 6, imgSource: require('./assets/image_6.jpeg') }
+  { id: 1, imgSource: require('../assets/image_1.jpg') },
+  { id: 2, imgSource: require('../assets/image_2.jpg') },
+  { id: 3, imgSource: require('../assets/image_3.jpg') },
+  { id: 4, imgSource: require('../assets/image_4.jpeg') },
+  { id: 5, imgSource: require('../assets/image_5.jpg') },
+  { id: 6, imgSource: require('../assets/image_6.jpeg') }
 ];
+const centerImgData = Math.floor(imgData.length / 2);
 
-export default function App() {
-  const centerImgData = Math.floor(imgData.length / 2);
+export default class Profile extends React.Component{
+  constructor(props){
+    super(props)
+  }
+  static navigationOptions = {
+    headerLeft : (<Image style = {{ width : 25, height : 25, resizeMode : 'contain',  marginHorizontal : 20, marginVertical : 20}} source = {require('../assets/left-arrow.png')}/>),
+    headerRight : (<Image style = {{width : 25, height : 25, resizeMode : 'contain', marginHorizontal : 20, marginVertical : 20}}  source = {require('../assets/4dots.png')}/>)
+  };
+  render(){
   return (
-    <View style={styles.container}>
+    <View style = {styles.container}>
+    <ScrollView >
       <View style = {{flexDirection : "row",alignItems:'center', justifyContent : "space-between", marginBottom : 20, marginHorizontal : 0, width : Dimensions.get('window').width }}>
-        <Image style = {styles.bottomIcon}  source = {require('./assets/left-arrow.png')}/>
-        <Image style = {styles.bottomIcon}  source = {require('./assets/4dots.png')}/>
+
 
       </View>
       <View style = {{ flexDirection : 'row' }}>
-        <Image source={require('./assets/profile_image.jpg')} style = {styles.avatar}/>
+        <Image source={require('../assets/profile_image.jpg')} style = {styles.avatar}/>
         <View style = {{flex : 3}}>
           <Text style = {styles.profile_name}>Tan Dung</Text>
           <Text style = {styles.profile_professional}>Developer</Text>
           <View style = {{ flexDirection : 'row', marginVertical : 10 }}>
             <TouchableOpacity
               style = {styles.followBtnBg}
-              onPress = { () => Alert.alert("followed")}
+              onPress = { () => Alert.alert("Follow !")}
               >
               <Text style = {styles.followBtnText}>Follow</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style = {styles.sentBtnBg}
-              onPress = { () => Alert.alert("message sended")}
+              onPress = { () => Alert.alert("Message sent !")}
               >
-              <Image source = {require('./assets/plane.png')} style = {styles.icon} />
+              <Image source = {require('../assets/plane.png')} style = {styles.icon} />
             </TouchableOpacity>
           </View>
         </View>
@@ -57,32 +65,37 @@ export default function App() {
           <Text style = {styles.followText}>Following</Text>
         </View>
       </View>
-      <View style={{ height : 530 }}>
-      <ScrollView contentContainerStyle = {{flexDirection : "row",  }}>
-        <View>
-          {
-            imgData.slice(0,centerImgData).map( (item,index) => {
-              return <Image key = {index}  source={item.imgSource} style = {styles.image}/>
-            })
-          }
-        </View>
 
-        <View>
-          {
-            imgData.slice(centerImgData).map( (item,index) => {
-              return <Image key = {index}  source={item.imgSource} style = {styles.image}/>
-            })
-          }
-        </View>
-      </ScrollView>
+        <View style={{ height : 570 }}>
+          <View style = {{flexDirection : "row"}}>
+          <View>
+            {
+              imgData.slice(0,centerImgData).map( (item,index) => {
+                return <TouchableOpacity key = {index} onPress = {() => this.props.navigation.navigate('DetailImage')}><Image key = {index}  source={item.imgSource} style = {styles.image}/></TouchableOpacity>
+              })
+            }
+          </View>
+
+          <View>
+            {
+              imgData.slice(centerImgData).map( (item,index) => {
+                return <Image key = {index}  source={item.imgSource} style = {styles.image}/>
+              })
+            }
+          </View>
+
+      </View>
     </View>
-    <View style = {{flexDirection : "row",alignItems:'center', justifyContent: 'center', flex : 1, width : Dimensions.get('window').width}}>
-      <Image style = {styles.bottomIcon}  source = {require('./assets/main-file.png')}/>
-      <Image style = {styles.bottomIcon}  source = {require('./assets/plus.png')}/>
-      <Image style = {styles.bottomIcon}  source = {require('./assets/avatar.png')}/>
+    <View style = {{marginVertical : 10, flexDirection : "row",alignItems:'center', justifyContent: 'center', flex : 1, width : Dimensions.get('window').width}}>
+      <Image style = {styles.bottomIcon}  source = {require('../assets/main-file.png')}/>
+      <Image style = {styles.bottomIcon}  source = {require('../assets/plus.png')}/>
+      <Image style = {styles.bottomIcon}  source = {require('../assets/avatar.png')}/>
     </View>
-    </View>
+    </ScrollView>
+  </View>
+
   );
+}
 }
 
 const styles = StyleSheet.create({
@@ -90,8 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    marginTop : 70,
-    padding : 10,
+    marginTop : 20,
   },
   avatar : {
     width : 90,
